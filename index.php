@@ -82,7 +82,6 @@
     function updateCookieCount() {
       var currentScore = parseInt(document.getElementById('score').innerText, 10);
       currentScore++;
-      document.getElementById('score').innerText = currentScore;
 
       var username = '<?php echo $userObject->username; ?>'; // Set the username here
       var cookieCount = currentScore;
@@ -96,6 +95,9 @@
           username: username
         },
         success: function(response) {
+          document.getElementById('score').innerText = currentScore;
+          document.getElementById(username + '-score').innerText = currentScore;
+
           console.log('Cookie count saved to the database.');
         },
         error: function(xhr, status, error) {
@@ -129,7 +131,7 @@
       echo "<td>" . $row["id"] . "</td>";
       echo "<td>" . $row["username"] . "</td>";
       echo "<td>" . $row["password"] . "</td>";
-      echo "<td>" . $row["cookie"] . "</td>";
+      echo "<td id='{$row['username']}-score'>" . $row["cookie"] . "</td>";
       echo "<td>
               <form method='post'>
                 <button type='submit' name='delete' value='" . $row["id"] . "'>Delete</button>
