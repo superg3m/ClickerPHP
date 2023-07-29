@@ -61,9 +61,6 @@
     // Check if a user with the given username already exists
     if ($username && $password && !$userObject->queryUser($username, $password)) {
       $userObject->createUser($username, $password, 0);
-
-      // Optionally, you can redirect the user to a new page after successful submission
-      // header("Location: new_page.php");
     } else {
       echo "Username already exists or invalid username/password. Please choose a different username or check your input.";
     }
@@ -75,8 +72,7 @@
     <p>Click the cookie to earn points!</p>
     <p>Points: <span id="score">
         <?php
-        // Assuming $userObject is an object with the property currentCookieCount
-        echo $userObject->currentCookieCount ?? 0;
+        echo $userObject->queryCookieCount();
         ?>
       </span></p>
     <button class="cookie-button" onclick="updateCookieCount()">Click me!</button>
@@ -89,7 +85,7 @@
       document.getElementById('score').innerText = currentScore;
 
       var username = '<?php echo $userObject->username; ?>'; // Set the username here
-      var cookieCount = currentScore + <?php echo $userObject->queryCookieCount(); ?>
+      var cookieCount = currentScore;
 
       // Send AJAX request to update the cookie count to the database
       $.ajax({
